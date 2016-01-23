@@ -13,7 +13,8 @@ class PinterestController extends Controller
   public function get_photos(){
       $lat = Input::get('lat');
       $lng = Input::get('lsng');
-
-      return response()->json(Input::all());
+//astea le-am pus sa vezi cum le iei din ajax
+     //input alll returneaza tot inapoi
+      return response()->json([$lat]);
   }
 }

@@ -79,24 +79,24 @@ $(document).ready(function () {
     $("#search_photos").on('click', function () {
 
         var lat = '', lng = '';
-
+///aici fac sctii tu.alte intrebari?si afiseaza ceva sau .daori n azi
         if (autocomplete.getPlace() == undefined)
             $('#nothing_select').modal('show');
         else {
             autocomplete = autocomplete.getPlace();
             lat = autocomplete.geometry.location.lat();
-            lng = autocomplete.geometry.location.lat();
+            lng = autocomplete.geometry.location.lng();
             $.ajax({
                 url: 'get_from_pinterest',
                 dataType: "json",
                 type: "POST",
                 data: {
                     lat: lat,
-                    lng: lng,
+                    lng: lng
                 }
-            }).done(function () {
+            }).done(function (response) {
 
-                console.log('victory');
+                console.log('victory',response);
             }).error(function () {
                 alert('Something go wrong ,please try again');
             });
