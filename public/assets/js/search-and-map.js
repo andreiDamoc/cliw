@@ -2,6 +2,7 @@ $(document).ready(function () {
 
 
     var map = null;
+    var autocomplete = null;
 
     function initialize() {
         var mapOptions = {
@@ -16,7 +17,7 @@ $(document).ready(function () {
 
         // Create the autocomplete helper, and associate it with
         // an HTML text input box.
-        var autocomplete = new google.maps.places.Autocomplete(input);
+         autocomplete = new google.maps.places.Autocomplete(input);
         autocomplete.bindTo('bounds', map);
 
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
@@ -47,20 +48,58 @@ $(document).ready(function () {
             }
 
             // Set the position of the marker using the place ID and location.
-            marker.setPlace(google.maps.Place ({
+            marker.setPlace({
                 placeId: place.place_id,
                 location: place.geometry.location
-            }));
+            });
             marker.setVisible(true);
 
             infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
                 'Place ID: ' + place.place_id + '<br>' +
                 place.formatted_address + '</div>');
             infowindow.open(map, marker);
-            alert('nigga this is it ' + place.geometry.location.lat() + place.geometry.location.lng());
+            ///asa se ia latitudinea si lng
+            //alert('nigga this is it ' + place.geometry.location.lat() + place.geometry.location.lat());
         });
     }
 
 // Run the initialize function when the window has finished loading.
     google.maps.event.addDomListener(window, 'load', initialize);
+
+    // Apply the plugin to the element
+    $("#noUiSlider").noUiSlider({
+        start: 40,
+        connect: "lower",
+        range: {
+            'min': 0,
+            'max': 100
+        }
+    });
+
+    $("#search_photos").on('click', function () {
+
+        var lat = '', lng = '';
+
+        if (autocomplete.getPlace() == undefined)
+            $('#nothing_select').modal('show');
+        else {
+            autocomplete = autocomplete.getPlace();
+            lat = autocomplete.geometry.location.lat();
+            lng = autocomplete.geometry.location.lat();
+            $.ajax({
+                url: 'get_from_pinterest',
+                dataType: "json",
+                type: "POST",
+                data: {
+                    lat: lat,
+                    lng: lng,
+                }
+            }).done(function () {
+
+                console.log('victory');
+            }).error(function () {
+                alert('Something go wrong ,please try again');
+            });
+        }
+    });
 });

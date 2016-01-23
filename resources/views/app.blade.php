@@ -80,6 +80,21 @@
       </div>
     </div>
   </div>
+ <div class="modal fade" id="nothing_select" tabindex="-1" role="dialog">
+   <div class="modal-dialog">
+     <div class="modal-content">
+       <div class="modal-header m-t-10 m-b-10">
+         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+       </div>
+       <div class="modal-body">
+         <h4 class="text-center">Please select a place to search before to hit this button, noob.</h4>
+         <div class="modal-footer text-center m-t-10">
+           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
     <script src="{{ asset('assets/plugins/pace/pace.min.js')}}" type="text/javascript"></script>
     <script src="{{ asset('assets/plugins/jquery/jquery-1.11.1.min.js')}}" type="text/javascript"></script>
     <script src="{{ asset('assets/plugins/modernizr.custom.js')}}" type="text/javascript"></script>

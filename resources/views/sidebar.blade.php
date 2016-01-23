@@ -52,6 +52,9 @@
                     </li>
                 </ul>
             </li>
+            <li>
+                    <button class="btn btn-default m-l-60" id="search_photos">Submit</button>
+            </li>
         </ul>
         <div class="clearfix"></div>
     </div>
