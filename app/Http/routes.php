@@ -12,5 +12,8 @@
 */
 
 Route::get('/', function () {
-    return view('login');
+    return view('app');
+});
+Route::get('a',function(){
+   dd('aa');
 });
