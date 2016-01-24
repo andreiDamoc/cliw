@@ -130,7 +130,36 @@ $(document).ready(function () {
                     var id = photos[i].getAttribute("id");
                     var secret = photos[i].getAttribute("secret");
                     var photo_url = 'https://farm' + farm + '.staticflickr.com/' + server + '/' +  id + '_' + secret + '.jpg';
-                    console.log(photo_url);
+
+                    var $instagram = $( '#instagram' );
+
+                        $instagram.append( '<div class="item" style="margin: 3px;width=60px"><a class="fancybox" href="' + photo_url + '"> <img style="display:block" width="40px" height= "45   px" width="100px" src="' + photo_url + '"/> </a></div>' );
+
+                    //todo aste trebuie incarcate daca adauugam poze,trebuie facut o fct cu ele.nu am timp acu
+                    //$(".owl-demo").owlCarousel({
+                    //
+                    //    autoPlay: 3000, //Set AutoPlay to 3 seconds
+                    //
+                    //    items: 20,
+                    //    itemsDesktop: [1199, 10],
+                    //    itemsDesktopSmall: [900, 10]
+                    //
+                    //});
+                    //$(".fancybox").fancybox({
+                    //    'transitionIn': 'elastic',
+                    //    'transitionOut': 'elastic',
+                    //    'speedIn': 600,
+                    //    'speedOut': 200,
+                    //    'overlayShow': false,
+                    //    helpers : {
+                    //        thumbs: {
+                    //            width   : 50,
+                    //            height  : 50,
+                    //            position: 'bottom'
+                    //        }
+                    //    }
+                    //});
+                    //console.log(photo_url);
                 }
             });
             ///flickr-end
@@ -148,9 +177,36 @@ $(document).ready(function () {
 
                     }).done(function(response){
 
-                        if(response.data.length >0)
-                        console.log(response.data[0].images.standard_resolution.url   );
+                        if(response.data.length >0) {
+                            console.log(response.data[0].images.standard_resolution.url);
+                            var $instagram = $( '#instagram' );
+                            $instagram.append( '<div class="item" style="margin: 3px;width=60px"><a class="fancybox" href="' + response.data[0].images.standard_resolution.url + '"> <img style="display:block" width="40px" height= "45   px" width="100px" src="' + response.data[0].images.standard_resolution.url + '"/> </a></div>' );
+
+                        }
                     });
+                });
+                $(".owl-demo").owlCarousel({
+
+                    autoPlay: 3000, //Set AutoPlay to 3 seconds
+
+                    items: 20,
+                    itemsDesktop: [1199, 10],
+                    itemsDesktopSmall: [900, 10]
+
+                });
+                $(".fancybox").fancybox({
+                    'transitionIn': 'elastic',
+                    'transitionOut': 'elastic',
+                    'speedIn': 600,
+                    'speedOut': 200,
+                    'overlayShow': false,
+                    helpers : {
+                        thumbs: {
+                            width   : 50,
+                            height  : 50,
+                            position: 'bottom'
+                        }
+                    }
                 });
                 //console.log(response.data[0]);
             }).error(function () {

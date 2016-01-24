@@ -1,8 +1,11 @@
 <nav class="page-sidebar" data-pages="sidebar">
     <div class="sidebar-header">
-        <img src="assets/img/logo_white.png" alt="logo" class="brand" data-src="assets/img/logo_white.png" data-src-retina="assets/img/logo_white_2x.png" width="78" height="22">
+        <img src="assets/img/logo_white.png" alt="logo" class="brand" data-src="assets/img/logo_white.png"
+             data-src-retina="assets/img/logo_white_2x.png" width="78" height="22">
+
         <div class="sidebar-header-controls">
-            <button type="button" class="btn m-l-60 btn-link visible-lg-inline" data-toggle-pin="sidebar"><i class="fa fs-12"></i>
+            <button type="button" class="btn m-l-60 btn-link visible-lg-inline" data-toggle-pin="sidebar"><i
+                        class="fa fs-12"></i>
             </button>
         </div>
     </div>
@@ -60,31 +63,30 @@
                 <ul class="sub-menu">
                     <li class="">
                         <div class="row">
-                            <li>
-                                <a href="javascript:;">
-                                    <span class="title">Instagram</span>
-                                    <span class=" arrow"></span>
-                                </a>
-                                <ul class="sub-menu">
-                                    <li class="">
-                                        <div class="row">
-                                        <form id="form">
-                                            <input type="text" id="search"/>
-                                        </form>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <a href="javascript:;">
-                                    <span class="title">FLickr</span>
-                                    <span class=" arrow"></span>
-                                </a>
+                    <li>
+                        <a href="javascript:;">
+                            <span class="title">Instagram</span>
+                            <span class=" arrow"></span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li class="">
+                                <div class="row">
+                                    <form id="form">
+                                        <input type="text" id="search"/>
+                                    </form>
+                                </div>
                             </li>
-                        </div>
+                        </ul>
+                        <a href="javascript:;">
+                            <span class="title">FLickr</span>
+                            <span class=" arrow"></span>
+                        </a>
+                    </li>
                     </li>
                 </ul>
             </li>
             <li>
-                    <button class="btn btn-default m-l-60" id="search_photos">Submit</button>
+                <button class="btn btn-default m-l-60" id="search_photos">Submit</button>
             </li>
         </ul>
         <div class="clearfix"></div>
