@@ -85,21 +85,31 @@ $(document).ready(function () {
         else {
             autocomplete = autocomplete.getPlace();
             lat = autocomplete.geometry.location.lat();
-            lng = autocomplete.geometry.location.lat();
+            lng = autocomplete.geometry.location.lng();
+          
             $.ajax({
-                url: 'get_from_pinterest',
-                dataType: "json",
-                type: "POST",
-                data: {
-                    lat: lat,
-                    lng: lng,
-                }
-            }).done(function () {
+                url: 'https://api.instagram.com/v1/locations/search?client_id=d49da08a520f47cbb6e7618f077f33ef&lat='+lat+'&lng='+lng,
+                dataType: "jsonp",
+                type: "GET"
 
-                console.log('victory');
+            }).done(function (response) {
+                response.data.forEach(function(entry) {
+                    $.ajax({
+                        url: 'https://api.instagram.com/v1/locations/'+entry.id+'/media/recent?client_id=d49da08a520f47cbb6e7618f077f33ef',
+                        dataType: "jsonp",
+                        type: "GET"
+
+                    }).done(function(response){
+
+                        if(response.data.length >0)
+                        console.log(response.data[0].images.standard_resolution.url   );
+                    });
+                });
+                //console.log(response.data[0]);
             }).error(function () {
                 alert('Something go wrong ,please try again');
             });
+
         }
     });
 });
