@@ -118,5 +118,6 @@
     <script src="{{ asset('pages/js/pages.min.js')}}"></script>
     <script src="{{ asset('assets/js/search-and-map.js')}}"></script>
     <script src="{{ asset('assets/js/scripts.js')}}"></script>
+    <script src="{{ asset('assets/js/app.js')}}"></script>
   </body>
 </html>

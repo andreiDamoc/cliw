@@ -54,6 +54,21 @@ $(document).ready(function () {
             });
             marker.setVisible(true);
 
+            console.log(place.geometry.location.lat());
+            console.log(place.geometry.location.lng());
+
+            var cityCircle = new google.maps.Circle({
+                center:new google.maps.LatLng(place.geometry.location.lat(), place.geometry.location.lng()),
+                radius:900,
+                strokeColor:"#0000FF",
+                strokeOpacity:0.8,
+                strokeWeight:2,
+                fillColor:"#0000FF",
+                fillOpacity:0.4
+            });
+
+            cityCircle.setMap(map);
+
             infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
                 'Place ID: ' + place.place_id + '<br>' +
                 place.formatted_address + '</div>');
@@ -69,34 +84,50 @@ $(document).ready(function () {
     // Apply the plugin to the element
     $("#noUiSlider").noUiSlider({
         start: 40,
+        step: 10,
         connect: "lower",
         range: {
             'min': 0,
-            'max': 100
+            'max': 100,
+            '20%': [ 30, 10 ],
+            '50%': [ 80, 5 ]
+        },
+        pips: {
+            mode: 'steps',
+            density: 2
         }
     });
 
     $("#search_photos").on('click', function () {
 
         var lat = '', lng = '';
-///aici fac sctii tu.alte intrebari?si afiseaza ceva sau .daori n azi
+
         if (autocomplete.getPlace() == undefined)
             $('#nothing_select').modal('show');
         else {
             autocomplete = autocomplete.getPlace();
             lat = autocomplete.geometry.location.lat();
             lng = autocomplete.geometry.location.lng();
-            $.ajax({
-                url: 'get_from_pinterest',
-                dataType: "json",
-                type: "POST",
-                data: {
-                    lat: lat,
-                    lng: lng
-                }
-            }).done(function (response) {
 
-                console.log('victory',response);
+            $.ajax({
+                url: 'https://api.instagram.com/v1/locations/search?client_id=d49da08a520f47cbb6e7618f077f33ef&lat='+lat+'&lng='+lng,
+                dataType: "jsonp",
+                type: "GET"
+
+            }).done(function (response) {
+                response.data.forEach(function(entry) {
+                    $.ajax({
+                        url: 'https://api.instagram.com/v1/locations/'+entry.id+'/media/recent?client_id=d49da08a520f47cbb6e7618f077f33ef',
+                        dataType: "jsonp",
+                        type: "GET"
+
+                    }).done(function(response){
+
+                        if(response.data.length >0)
+                        console.log(response.data[0].images.standard_resolution.url   );
+                    });
+                });
+                //console.log(response.data[0]);
             }).error(function () {
                 alert('Something go wrong ,please try again');
             });
