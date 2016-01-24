@@ -52,6 +52,38 @@
                 </ul>
             </li>
             <li>
+                <a href="javascript:;">
+                    <span class="title">Application</span>
+                    <span class=" arrow"></span>
+                </a>
+                <span class="icon-thumbnail">App</span>
+                <ul class="sub-menu">
+                    <li class="">
+                        <div class="row">
+                            <li>
+                                <a href="javascript:;">
+                                    <span class="title">Instagram</span>
+                                    <span class=" arrow"></span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li class="">
+                                        <div class="row">
+                                        <form id="form">
+                                            <input type="text" id="search"/>
+                                        </form>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <a href="javascript:;">
+                                    <span class="title">FLickr</span>
+                                    <span class=" arrow"></span>
+                                </a>
+                            </li>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <li>
                     <button class="btn btn-default m-l-60" id="search_photos">Submit</button>
             </li>
         </ul>

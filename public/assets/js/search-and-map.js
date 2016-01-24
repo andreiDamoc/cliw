@@ -101,14 +101,13 @@ $(document).ready(function () {
     $("#search_photos").on('click', function () {
 
         var lat = '', lng = '';
-
+///aici fac sctii tu.alte intrebari?si afiseaza ceva sau .daori n azi
         if (autocomplete.getPlace() == undefined)
             $('#nothing_select').modal('show');
         else {
             autocomplete = autocomplete.getPlace();
             lat = autocomplete.geometry.location.lat();
             lng = autocomplete.geometry.location.lng();
-
             $.ajax({
                 url: 'https://api.instagram.com/v1/locations/search?client_id=d49da08a520f47cbb6e7618f077f33ef&lat='+lat+'&lng='+lng,
                 dataType: "jsonp",
