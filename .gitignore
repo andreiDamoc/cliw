@@ -3,8 +3,6 @@
 Homestead.yaml
 Homestead.json
 .env
-/vendor
-/node_modules
 /bootstrap/compiled.php
 /.env
 

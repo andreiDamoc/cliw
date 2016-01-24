@@ -23,12 +23,22 @@
     <link href="{{ asset('assets/plugins/switchery/css/switchery.min.css')}}" rel="stylesheet" type="text/css" media="screen" />
     <link href="{{ asset('pages/css/pages-icons.css" rel="stylesheet')}}" type="text/css">
     <link class="main-stylesheet" href="{{ asset('pages/css/pages.css')}}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('assets/plugins/fancybox/source/jquery.fancybox.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/owl-carousel/assets/owl.carousel.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/owl-carousel/owl.theme.css') }}">
 
     <style>
       html, body {
         width: 100% !important;
         height: 100% !important;
       }
+
+    .owl-item img{
+    width:60px !important;
+    }
+     .owl-item .active{
+        width:60px !important;
+        }
     </style>
     <link media="screen" type="text/css" rel="stylesheet" href="{{asset('assets/plugins/jquery-nouislider/jquery.nouislider.css')}}"/>
     <script type="text/javascript">
@@ -76,8 +86,10 @@
         <div class="container-fluid container-fixed-lg">
         </div>
       </div>
-      <div class="container-fluid container-fixed-lg footer m-b-60" style="height: 50px !important;">asdasdf
-      </div>
+        <div class="container-fluid container-fixed-lg footer m-b-60" style="height: 50px !important;">
+          <div class="owl-demo" id="instagram" >
+          </div>
+        </div>
     </div>
   </div>
  <div class="modal fade" id="nothing_select" tabindex="-1" role="dialog">
@@ -106,18 +118,23 @@
     <script src="{{ asset('assets/plugins/jquery-ios-list/jquery.ioslist.min.js')}}" type="text/javascript"></script>
     <script src="{{ asset('assets/plugins/jquery-actual/jquery.actual.min.js')}}"></script>
     <script src="{{ asset('assets/plugins/jquery-scrollbar/jquery.scrollbar.min.js')}}"></script>
+    <script src="{{ asset('assets/plugins/fancybox/source/jquery.fancybox.pack.js')}}"></script>
+    <script src="{{ asset('assets/plugins/owl-carousel/owl.carousel.js')}}"></script>
+    <script src="{{ asset('assets/plugins/owl-carousel/owl.carousel.min.js')}}"></script>
     <script type="text/javascript" src="{{ asset('assets/plugins/bootstrap-select2/select2.min.js')}}"></script>
     <script type="text/javascript" src="{{ asset('assets/plugins/classie/classie.js')}}"></script>
     <script src="{{ asset('assets/plugins/switchery/js/switchery.min.js')}}" type="text/javascript"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvGjE0XQRtPsLmbXyxKYfM6ukQTNfUR6w&libraries=places"></script>
-
-  <script type="text/javascript" src="{{asset('assets/plugins/jquery-nouislider/jquery.nouislider.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/plugins/jquery-nouislider/jquery.nouislider.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/plugins/jquery-nouislider/jquery.liblink.js')}}"></script>
-  <script type="text/javascript" src="{{ asset('assets/plugins/jquery-nouislider/jquery.nouislider.min.js')}}"> </script>
+    <script type="text/javascript" src="{{ asset('assets/plugins/jquery-nouislider/jquery.nouislider.min.js')}}"> </script>
     <script type="text/javascript" src="{{ asset('assets/plugins/jquery-nouislider/jquery.liblink.js')}}"></script>
     <script src="{{ asset('pages/js/pages.min.js')}}"></script>
     <script src="{{ asset('assets/js/search-and-map.js')}}"></script>
     <script src="{{ asset('assets/js/scripts.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/instagram.js')}}"></script>
+    <script src="{{ asset('assets/js/gallery-fancybox.js') }}"></script>
+    <script src="{{ asset('assets/js/owl-carousel.js') }}"></script>
     <script src="{{ asset('assets/js/app.js')}}"></script>
   </body>
 </html>

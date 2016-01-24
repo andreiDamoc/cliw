@@ -24,7 +24,7 @@ $(document).ready(function () {
 
         var infowindow = new google.maps.InfoWindow();
         var marker = new google.maps.Marker({
-            map: map,
+            map: map
         });
         google.maps.event.addListener(marker, 'click', function () {
             infowindow.open(map, marker);
@@ -70,6 +70,7 @@ $(document).ready(function () {
             cityCircle.setMap(map);
 
             infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+                'Place ID: ' + place.place_id + '<br>' +
                 place.formatted_address + '</div>');
             infowindow.open(map, marker);
             ///asa se ia latitudinea si lng
@@ -81,7 +82,6 @@ $(document).ready(function () {
     google.maps.event.addDomListener(window, 'load', initialize);
 
     // Apply the plugin to the element
-
     $("#noUiSlider").noUiSlider({
         start: 40,
         step: 10,
@@ -101,14 +101,13 @@ $(document).ready(function () {
     $("#search_photos").on('click', function () {
 
         var lat = '', lng = '';
-
+///aici fac sctii tu.alte intrebari?si afiseaza ceva sau .daori n azi
         if (autocomplete.getPlace() == undefined)
             $('#nothing_select').modal('show');
         else {
             autocomplete = autocomplete.getPlace();
             lat = autocomplete.geometry.location.lat();
             lng = autocomplete.geometry.location.lng();
-
             $.ajax({
                 url: 'https://api.instagram.com/v1/locations/search?client_id=d49da08a520f47cbb6e7618f077f33ef&lat='+lat+'&lng='+lng,
                 dataType: "jsonp",
@@ -131,7 +130,6 @@ $(document).ready(function () {
             }).error(function () {
                 alert('Something go wrong ,please try again');
             });
-
         }
     });
 });
