@@ -3,8 +3,6 @@
 Homestead.yaml
 Homestead.json
 .env
-/vendor
-/node_modules
 /bootstrap/compiled.php
 /.env
 
@@ -12,7 +10,9 @@ Homestead.json
 composer.phar
 composer.lock
 Thumbs.db
-.idea
+.idea/blade.xml
+.idea/misc.xml
+.idea/workspace.xml
 .vagrant
 Vagrantfile
 bootstrap.sh

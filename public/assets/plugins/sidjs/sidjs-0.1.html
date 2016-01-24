@@ -1,0 +1,13 @@
+<!doctype html>
+<html>
+<head>
+    <title>SidJS</title>
+</head>
+<body>
+    <script src="sidjs-0.1.js"></script>
+	<script>
+		Sid.js(['test.js.php', 'test.js.php?i=1&s=3', 'test.js.php?i=2&s=2'], function() { alert('js done'); });
+		Sid.css(['test.css.php', 'test.css.php?c=ffffcc&s=5'], function() { alert('css done'); });
+	</script>
+</body>
+</html>
