@@ -108,6 +108,32 @@ $(document).ready(function () {
             autocomplete = autocomplete.getPlace();
             lat = autocomplete.geometry.location.lat();
             lng = autocomplete.geometry.location.lng();
+            ///flickr-start
+            var flicr_url = 'https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=e113f3a7317277392933dbb91decaf01' +
+                '&per_page=10' +
+                '&lat=' + lat +
+                '&lng=' + lng +
+                '&radius=100';
+            console.log(flicr_url);
+            $.ajax({
+                url:flicr_url,
+                dataType: "xml",
+                type: "GET"
+
+            }).done(function (response) {
+                //console.log(response);
+                var photos = response.getElementsByTagName('photo');
+                console.log(photos);
+                for (var i=0;i< photos.length; i++) {
+                    var farm = photos[i].getAttribute("farm");
+                    var server= photos[i].getAttribute("server");
+                    var id = photos[i].getAttribute("id");
+                    var secret = photos[i].getAttribute("secret");
+                    var photo_url = 'https://farm' + farm + '.staticflickr.com/' + server + '/' +  id + '_' + secret + '.jpg';
+                    console.log(photo_url);
+                }
+            });
+            ///flickr-end
             $.ajax({
                 url: 'https://api.instagram.com/v1/locations/search?client_id=d49da08a520f47cbb6e7618f077f33ef&lat='+lat+'&lng='+lng,
                 dataType: "jsonp",
