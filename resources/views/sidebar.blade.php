@@ -1,4 +1,4 @@
-<nav class="page-sidebar" data-pages="sidebar" >
+<nav class="page-sidebar" data-pages="sidebar">
     <div class="sidebar-header">
         <img src="assets/img/logo_white.png" alt="logo" class="brand" data-src="assets/img/logo_white.png"
              data-src-retina="assets/img/logo_white_2x.png" width="78" height="22">
@@ -82,6 +82,27 @@
                             <span class=" arrow"></span>
                         </a>
                     </li>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <span class="title">From</span>
+                    <span class=" arrow"></span>
+                </a>
+                <span class=" icon-thumbnail">FR</span>
+                <ul class="sub-menu">
+                    <li class="">
+                        <div class="row">
+                    <li>
+                    <div class="checkbox check-success  ">
+                        <input type="checkbox"   id="instagram_check">
+                        <label for="instagram_check">Instagram</label>
+                    </div>
+                    <div class="checkbox check-danger  ">
+                        <input type="checkbox"  id="flickr">
+                        <label for="flickr">Flickr</label>
+                    </div>
                 </ul>
             </li>
             <li>
