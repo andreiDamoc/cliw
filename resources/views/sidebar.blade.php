@@ -1,4 +1,4 @@
-<nav class="page-sidebar" data-pages="sidebar">
+<nav class="page-sidebar" data-pages="sidebar" >
     <div class="sidebar-header">
         <img src="assets/img/logo_white.png" alt="logo" class="brand" data-src="assets/img/logo_white.png"
              data-src-retina="assets/img/logo_white_2x.png" width="78" height="22">
@@ -78,15 +78,23 @@
                             </li>
                         </ul>
                         <a href="javascript:;">
-                            <span class="title">FLickr</span>
+                            <span class="title">Flickr</span>
                             <span class=" arrow"></span>
                         </a>
-                    </li>
                     </li>
                 </ul>
             </li>
             <li>
-                <button class="btn btn-default m-l-60" id="search_photos">Submit</button>
+                <div>
+                    <button style="margin-top:15px; margin-left:15px" class="btn btn-default" id="search_photos">Submit</button>
+                </div>
+            </li>
+            <li >
+                <div style="margin-top:15px; margin-left:15px" class="btn-group" role="group" >
+                    <button class="btn btn-default" id="save_state" onload="toLoadOrNotToLoad" >Save</button>
+                    <button class="btn btn-default" id="restore_state">Restore</button>
+                    <button class="btn btn-default" id="clear_state">Clear</button>
+                </div>
             </li>
         </ul>
         <div class="clearfix"></div>
