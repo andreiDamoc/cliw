@@ -127,15 +127,10 @@ $(document).ready(function () {
     });
 
     console.log($('.owl-stage-outer'));
-    $("#instagram_check").change(function () {
-        $(this).is(':checked') ? instagram_check =1 : instagram_check = 0;
-    });
-    $("#flickr").change(function () {
-        $(this).is(':checked') ? flickr_check = 1  : flickr_check = 0;
-    });
+
     $("#search_photos").on('click', function () {
 
-///aici fac sctii tu.alte intrebari?si afiseaza ceva sau .daori n azi
+        ///aici fac sctii tu.alte intrebari?si afiseaza ceva sau .daori n azi
         //var lat = '', lng = '';//gse: vreau astea globale
         if(typeof lat == 'undefined')
             lat = localStorage.getItem('lat');
@@ -151,7 +146,7 @@ $(document).ready(function () {
                 '&lat=' + lat +
                 '&lng=' + lng +
                 '&radius=100';
-            if (flickr_check == 1) {
+            if ($("#flickr").is(':checked')) {
                 $.ajax({
                     url:flicr_url,
                     dataType: "xml",
@@ -199,7 +194,7 @@ $(document).ready(function () {
                     //});
                 });
             }
-            if (instagram_check == 1) {
+            if ($("#instagram_check").is(':checked')) {
                 console.log(instagram_check + 'inst');
                 ///flickr-end
                 $.ajax({
