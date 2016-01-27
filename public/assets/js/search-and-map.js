@@ -1,5 +1,6 @@
-$(document).ready(function () {
 
+$(document).ready(function () {
+    toLoadOrNotToLoad();
 
     var map = null;
     var autocomplete = null;
@@ -100,7 +101,12 @@ $(document).ready(function () {
 
     $("#search_photos").on('click', function () {
 
-        var lat = '', lng = '';
+        //var lat = '', lng = '';//gse: vreau astea globale
+        if(typeof lat == 'undefined')
+            lat = localStorage.getItem('lat');
+        if(typeof lng == 'undefined')
+            lat = localStorage.getItem('lng');
+
 ///aici fac sctii tu.alte intrebari?si afiseaza ceva sau .daori n azi
         if (autocomplete.getPlace() == undefined)
             $('#nothing_select').modal('show');
@@ -214,4 +220,5 @@ $(document).ready(function () {
             });
         }
     });
+
 });
