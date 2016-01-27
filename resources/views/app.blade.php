@@ -135,6 +135,5 @@
     <script type="text/javascript" src="{{ asset('assets/js/instagram.js')}}"></script>
     <script src="{{ asset('assets/js/gallery-fancybox.js') }}"></script>
     <script src="{{ asset('assets/js/owl-carousel.js') }}"></script>
-    <script src="{{ asset('assets/js/app.js')}}"></script>
   </body>
 </html>
