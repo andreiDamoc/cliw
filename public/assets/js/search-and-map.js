@@ -4,10 +4,12 @@ $(document).ready(function () {
      map = null;
      autocomplete = null;
 
+
     var map = null;
     var autocomplete = null;
 
     function initialize() {
+        var currentLocation = new google.maps.LatLng(47.1584549, 27.601441799999975);
         var mapOptions = {
             center: {lat:  (localStorage.getItem('lat') != null) ? Number(localStorage.getItem('lat')) :47.1584549 , lng: (localStorage.getItem('lng')== null) ? 27.601441799999975 : Number(localStorage.getItem('lng'))},
             zoom: 8,
@@ -27,12 +29,21 @@ $(document).ready(function () {
 
         var infowindow = new google.maps.InfoWindow();
         var marker = new google.maps.Marker({
-            map: map
+            position: currentLocation,
+            map: map,
+            draggable: true
         });
         google.maps.event.addListener(marker, 'click', function () {
             infowindow.open(map, marker);
         });
 
+        google.maps.event.addListener(marker, 'dragend', function() {
+            lat = marker.getPosition().lat();
+            lng = marker.getPosition().lng();
+
+            console.log(lat);
+            console.log(lng);
+        });
         // Get the full place details when the user selects a place from the
         // list of suggestions.
         google.maps.event.addListener( autocomplete,'place_changed', function () {
@@ -54,15 +65,21 @@ $(document).ready(function () {
             }
 
             // Set the position of the marker using the place ID and location.
-            marker.setPlace({
-                placeId: place.place_id,
-                location: place.geometry.location
+            marker = new google.maps.Marker({
+                position: place.geometry.location,
+                map: map,
+                draggable: true
             });
             marker.setVisible(true);
 
-            console.log(place.geometry.location.lat());
-            console.log(place.geometry.location.lng());
+            google.maps.event.addListener(marker, 'dragend', function() {
+                lat = marker.getPosition().lat();
+                lng = marker.getPosition().lng();
 
+                console.log(lat);
+                console.log(lng);
+            });
+            
             var cityCircle = new google.maps.Circle({
                 center:new google.maps.LatLng(place.geometry.location.lat(), place.geometry.location.lng()),
                 radius:900,
@@ -74,11 +91,14 @@ $(document).ready(function () {
             });
 
             cityCircle.setMap(map);
-
-            infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+            marker.setVisible(true);
+            
+            google.maps.event.addListener(marker, 'click', function () {
+                infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
                 'Place ID: ' + place.place_id + '<br>' +
                 place.formatted_address + '</div>');
-            infowindow.open(map, marker);
+                infowindow.open(map, marker);
+            });
             ///asa se ia latitudinea si lng
             //alert('nigga this is it ' + place.geometry.location.lat() + place.geometry.location.lat());
         });
@@ -89,14 +109,16 @@ $(document).ready(function () {
 
     // Apply the plugin to the element
     $("#noUiSlider").noUiSlider({
-        start: 40,
+        start: [ 20, 80 ],
         step: 10,
-        connect: "lower",
+        margin: 20,
+        connect: true,
+        direction: 'rtl',
+        orientation: 'horizontal',
+        behaviour: 'tap-drag',
         range: {
             'min': 0,
-            'max': 100,
-            '20%': [ 30, 10 ],
-            '50%': [ 80, 5 ]
+            'max': 100
         },
         pips: {
             mode: 'steps',
@@ -178,7 +200,7 @@ $(document).ready(function () {
                 });
             }
             if (instagram_check == 1) {
-                console.log(instagram_check+'inst');
+                console.log(instagram_check + 'inst');
                 ///flickr-end
                 $.ajax({
                     url: 'https://api.instagram.com/v1/locations/search?client_id=d49da08a520f47cbb6e7618f077f33ef&lat=' + lat + '&lng=' + lng,
@@ -198,7 +220,7 @@ $(document).ready(function () {
                                 var $instagram = $('#instagram');
 
                                 console.log('---' + response.data[0].images.standard_resolution.url + '----');
-                                $instagram.append( '<div class="item" style="margin: 3px;width=60px"><a class="fancybox" href="' + response.data[0].images.standard_resolution.url + '"> <img style="display:block" width="40px" height= "45px" width="100px" src="' + response.data[0].images.standard_resolution.url + '"/> </a></div>');
+                                $instagram.append('<div class="item" style="margin: 3px;width=60px"><a class="fancybox" href="' + response.data[0].images.standard_resolution.url + '"> <img style="display:block" width="40px" height= "45px" width="100px" src="' + response.data[0].images.standard_resolution.url + '"/> </a></div>');
 
                             }
                         });
@@ -231,7 +253,6 @@ $(document).ready(function () {
                 }).error(function () {
                     alert('Something go wrong ,please try again');
                 });
-
             }
             //$(".owl-demo").owlCarousel({
             //
@@ -242,8 +263,6 @@ $(document).ready(function () {
             //    itemsDesktopSmall: [900, 10]
             //
             //});
-
-
-        }
+         }
     });
 });

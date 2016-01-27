@@ -48,7 +48,6 @@
                                 <div id="noUiSlider" class="bg-master"></div>
                             </div>
                             <div class="col-md-4">
-
                             </div>
                         </div>
                     </li>
@@ -81,7 +80,6 @@
                             <span class="title">Flickr</span>
                             <span class=" arrow"></span>
                         </a>
-                    </li>
                     </li>
                 </ul>
             </li>
