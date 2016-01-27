@@ -87,7 +87,7 @@
         </div>
       </div>
         <div class="container-fluid container-fixed-lg footer m-b-60" style="height: 50px !important;">
-          <div class="owl-demo" id="instagram" >
+          <div class="owl-demo" id="instagram">
           </div>
         </div>
     </div>
