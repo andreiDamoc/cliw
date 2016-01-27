@@ -14,8 +14,7 @@ $("#save_state").on('click', function () {
     if(typeof lat == 'undefined')
         alert('No location selected');
     else {
-        $('#restore_state').toggle('show');
-        $('#clear_state').toggle('show');
+        toLoadOrNotToLoad();
         console.log('saved ' + lat + ' ' + lng);
         localStorage.setItem('lng', lng);
         localStorage.setItem('lat', lat);
