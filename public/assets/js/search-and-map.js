@@ -105,15 +105,17 @@ $(document).ready(function () {
     });
 
     console.log($('.owl-stage-outer'));
-    $("#instagram_check").change(function () {
-        $(this).is(':checked') ? instagram_check =1 : instagram_check = 0;
-    });
-    $("#flickr").change(function () {
-        $(this).is(':checked') ? flickr_check = 1  : flickr_check = 0;
-    });
+    //$("#instagram_check").change(function () {
+    //    $(this).is(':checked') ? instagram_check =1 : instagram_check = 0;
+    //});
+    //$("#flickr").is(':checked')  change(function () {
+    //    $(this).is(':checked') ? flickr_check = 1  : flickr_check = 0;
+    //});
     $("#search_photos").on('click', function () {
+        console.log('searching ');
+        $(this).is(':checked') ? flickr_check = 1  : flickr_check = 0;
 
-///aici fac sctii tu.alte intrebari?si afiseaza ceva sau .daori n azi
+        ///aici fac sctii tu.alte intrebari?si afiseaza ceva sau .daori n azi
         //var lat = '', lng = '';//gse: vreau astea globale
         if(typeof lat == 'undefined')
             lat = localStorage.getItem('lat');
@@ -129,7 +131,8 @@ $(document).ready(function () {
                 '&lat=' + lat +
                 '&lng=' + lng +
                 '&radius=100';
-            if (flickr_check == 1) {
+            if ($("#flickr").is(':checked')) {
+                console.log('searching flickr');
                 $.ajax({
                     url:flicr_url,
                     dataType: "xml",
@@ -152,15 +155,15 @@ $(document).ready(function () {
 
                     }
                     //console.log($instagram);
-                    $(".owl-demo").owlCarousel({
-
-                        autoPlay: 3000, //Set AutoPlay to 3 seconds
-
-                        items: 20,
-                        itemsDesktop: [1199, 10],
-                        itemsDesktopSmall: [900, 10]
-
-                    });
+                    //$(".owl-demo").owlCarousel({
+                    //
+                    //    autoPlay: 3000, //Set AutoPlay to 3 seconds
+                    //
+                    //    items: 20,
+                    //    itemsDesktop: [1199, 10],
+                    //    itemsDesktopSmall: [900, 10]
+                    //
+                    //});
                     //$(".fancybox").fancybox({
                     //    'transitionIn': 'elastic',
                     //    'transitionOut': 'elastic',
@@ -175,9 +178,10 @@ $(document).ready(function () {
                     //        }
                     //    }
                     //});
+                    console.log('searching flickr done');
                 });
             }
-            if (instagram_check == 1) {
+            if ($("#instagram_check").is(':checked')) {
                 console.log(instagram_check+'inst');
                 ///flickr-end
                 $.ajax({
@@ -233,15 +237,15 @@ $(document).ready(function () {
                 });
 
             }
-            //$(".owl-demo").owlCarousel({
-            //
-            //    autoPlay: 3000, //Set AutoPlay to 3 seconds
-            //
-            //    items: 20,
-            //    itemsDesktop: [1199, 10],
-            //    itemsDesktopSmall: [900, 10]
-            //
-            //});
+            $(".owl-demo").owlCarousel({
+
+                autoPlay: 3000, //Set AutoPlay to 3 seconds
+
+                items: 20,
+                itemsDesktop: [1199, 10],
+                itemsDesktopSmall: [900, 10]
+
+            });
 
 
         }
