@@ -61,7 +61,6 @@ $( document ).ready(function() {
         var tagName = $( '#search' ).val();
         Instagram.tagsByName(tagName, function( response ) {
             var $instagram = $( '#instagram' );
-                $instagram.html('');
 
             for ( var i = 0; i < response.data.length; i++ ) {
                 imageUrl = response.data[i].images.low_resolution.url;

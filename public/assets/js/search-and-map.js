@@ -1,13 +1,15 @@
-
 $(document).ready(function () {
     toLoadOrNotToLoad();
+    instagram_check = 0,flickr_check = 0 ,lat = '', lng = '';
+     map = null;
+     autocomplete = null;
 
     var map = null;
     var autocomplete = null;
 
     function initialize() {
         var mapOptions = {
-            center: {lat: 47.1584549, lng: 27.601441799999975},
+            center: {lat:  (localStorage.getItem('lat') != null) ? Number(localStorage.getItem('lat')) :47.1584549 , lng: (localStorage.getItem('lng')== null) ? 27.601441799999975 : Number(localStorage.getItem('lng'))},
             zoom: 8,
             scrollwheel: false
         };
@@ -33,12 +35,15 @@ $(document).ready(function () {
 
         // Get the full place details when the user selects a place from the
         // list of suggestions.
-        google.maps.event.addListener(autocomplete, 'place_changed', function () {
+        google.maps.event.addListener( autocomplete,'place_changed', function () {
+
             infowindow.close();
             var place = autocomplete.getPlace();
             if (!place.geometry) {
                 return;
             }
+            lat = place.geometry.location.lat();
+            lng = place.geometry.location.lng();
             google.maps.event.trigger(map, 'resize');
             if (place.geometry.viewport) {
 
@@ -99,49 +104,107 @@ $(document).ready(function () {
         }
     });
 
+    console.log($('.owl-stage-outer'));
+    $("#instagram_check").change(function () {
+        $(this).is(':checked') ? instagram_check =1 : instagram_check = 0;
+    });
+    $("#flickr").change(function () {
+        $(this).is(':checked') ? flickr_check = 1  : flickr_check = 0;
+    });
     $("#search_photos").on('click', function () {
 
+///aici fac sctii tu.alte intrebari?si afiseaza ceva sau .daori n azi
         //var lat = '', lng = '';//gse: vreau astea globale
         if(typeof lat == 'undefined')
             lat = localStorage.getItem('lat');
         if(typeof lng == 'undefined')
             lat = localStorage.getItem('lng');
 
-///aici fac sctii tu.alte intrebari?si afiseaza ceva sau .daori n azi
-        if (autocomplete.getPlace() == undefined)
+        if (lat == ''  )
             $('#nothing_select').modal('show');
         else {
-            autocomplete = autocomplete.getPlace();
-            lat = autocomplete.geometry.location.lat();
-            lng = autocomplete.geometry.location.lng();
             ///flickr-start
             var flicr_url = 'https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=e113f3a7317277392933dbb91decaf01' +
                 '&per_page=10' +
                 '&lat=' + lat +
                 '&lng=' + lng +
                 '&radius=100';
-            console.log(flicr_url);
-            $.ajax({
-                url:flicr_url,
-                dataType: "xml",
-                type: "GET"
+            if (flickr_check == 1) {
+                $.ajax({
+                    url:flicr_url,
+                    dataType: "xml",
+                    type: "GET"
 
-            }).done(function (response) {
-                //console.log(response);
-                var photos = response.getElementsByTagName('photo');
-                console.log(photos);
-                for (var i=0;i< photos.length; i++) {
-                    var farm = photos[i].getAttribute("farm");
-                    var server= photos[i].getAttribute("server");
-                    var id = photos[i].getAttribute("id");
-                    var secret = photos[i].getAttribute("secret");
-                    var photo_url = 'https://farm' + farm + '.staticflickr.com/' + server + '/' +  id + '_' + secret + '.jpg';
+                }).done(function (response) {
+                    //console.log(response);
+                    var photos = response.getElementsByTagName('photo');
+                    console.log(photos);
+                    for (var i=0;i< photos.length; i++) {
+                        var farm = photos[i].getAttribute("farm");
+                        var server= photos[i].getAttribute("server");
+                        var id = photos[i].getAttribute("id");
+                        var secret = photos[i].getAttribute("secret");
+                        var photo_url = 'https://farm' + farm + '.staticflickr.com/' + server + '/' +  id + '_' + secret + '.jpg';
 
-                    var $instagram = $( '#instagram' );
+                        var $instagram = $( '#instagram' );
+                        console.log('---'  + photo_url + '---');
+                        $instagram.append( '<div class="item" style="margin: 3px;width=60px"><a class="fancybox" href="' + photo_url + '"> <img style="display:block" width="40px" height= "45px" width="100px" src="' + photo_url + '"/> </a></div>' );
 
-                        $instagram.append( '<div class="item" style="margin: 3px;width=60px"><a class="fancybox" href="' + photo_url + '"> <img style="display:block" width="40px" height= "45   px" width="100px" src="' + photo_url + '"/> </a></div>' );
+                    }
+                    //console.log($instagram);
+                    $(".owl-demo").owlCarousel({
 
-                    //todo aste trebuie incarcate daca adauugam poze,trebuie facut o fct cu ele.nu am timp acu
+                        autoPlay: 3000, //Set AutoPlay to 3 seconds
+
+                        items: 20,
+                        itemsDesktop: [1199, 10],
+                        itemsDesktopSmall: [900, 10]
+
+                    });
+                    //$(".fancybox").fancybox({
+                    //    'transitionIn': 'elastic',
+                    //    'transitionOut': 'elastic',
+                    //    'speedIn': 600,
+                    //    'speedOut': 200,
+                    //    'overlayShow': false,
+                    //    helpers : {
+                    //        thumbs: {
+                    //            width   : 50,
+                    //            height  : 50,
+                    //            position: 'bottom'
+                    //        }
+                    //    }
+                    //});
+                });
+            }
+            if (instagram_check == 1) {
+                console.log(instagram_check+'inst');
+                ///flickr-end
+                $.ajax({
+                    url: 'https://api.instagram.com/v1/locations/search?client_id=d49da08a520f47cbb6e7618f077f33ef&lat=' + lat + '&lng=' + lng,
+                    dataType: "jsonp",
+                    type: "GET"
+
+                }).done(function (response) {
+                    response.data.forEach(function (entry) {
+                        $.ajax({
+                            url: 'https://api.instagram.com/v1/locations/' + entry.id + '/media/recent?client_id=d49da08a520f47cbb6e7618f077f33ef',
+                            dataType: "jsonp",
+                            type: "GET"
+
+                        }).done(function (response) {
+
+                            if (response.data.length > 0) {
+                                var $instagram = $('#instagram');
+
+                                console.log('---' + response.data[0].images.standard_resolution.url + '----');
+                                $instagram.append( '<div class="item" style="margin: 3px;width=60px"><a class="fancybox" href="' + response.data[0].images.standard_resolution.url + '"> <img style="display:block" width="40px" height= "45px" width="100px" src="' + response.data[0].images.standard_resolution.url + '"/> </a></div>');
+
+                            }
+                        });
+
+                    });
+
                     //$(".owl-demo").owlCarousel({
                     //
                     //    autoPlay: 3000, //Set AutoPlay to 3 seconds
@@ -165,60 +228,22 @@ $(document).ready(function () {
                     //        }
                     //    }
                     //});
-                    //console.log(photo_url);
-                }
-            });
-            ///flickr-end
-            $.ajax({
-                url: 'https://api.instagram.com/v1/locations/search?client_id=d49da08a520f47cbb6e7618f077f33ef&lat='+lat+'&lng='+lng,
-                dataType: "jsonp",
-                type: "GET"
-
-            }).done(function (response) {
-                response.data.forEach(function(entry) {
-                    $.ajax({
-                        url: 'https://api.instagram.com/v1/locations/'+entry.id+'/media/recent?client_id=d49da08a520f47cbb6e7618f077f33ef',
-                        dataType: "jsonp",
-                        type: "GET"
-
-                    }).done(function(response){
-
-                        if(response.data.length >0) {
-                            console.log(response.data[0].images.standard_resolution.url);
-                            var $instagram = $( '#instagram' );
-                            $instagram.append( '<div class="item" style="margin: 3px;width=60px"><a class="fancybox" href="' + response.data[0].images.standard_resolution.url + '"> <img style="display:block" width="40px" height= "45   px" width="100px" src="' + response.data[0].images.standard_resolution.url + '"/> </a></div>' );
-
-                        }
-                    });
+                }).error(function () {
+                    alert('Something go wrong ,please try again');
                 });
-                $(".owl-demo").owlCarousel({
 
-                    autoPlay: 3000, //Set AutoPlay to 3 seconds
+            }
+            //$(".owl-demo").owlCarousel({
+            //
+            //    autoPlay: 3000, //Set AutoPlay to 3 seconds
+            //
+            //    items: 20,
+            //    itemsDesktop: [1199, 10],
+            //    itemsDesktopSmall: [900, 10]
+            //
+            //});
 
-                    items: 20,
-                    itemsDesktop: [1199, 10],
-                    itemsDesktopSmall: [900, 10]
 
-                });
-                $(".fancybox").fancybox({
-                    'transitionIn': 'elastic',
-                    'transitionOut': 'elastic',
-                    'speedIn': 600,
-                    'speedOut': 200,
-                    'overlayShow': false,
-                    helpers : {
-                        thumbs: {
-                            width   : 50,
-                            height  : 50,
-                            position: 'bottom'
-                        }
-                    }
-                });
-                //console.log(response.data[0]);
-            }).error(function () {
-                alert('Something go wrong ,please try again');
-            });
         }
     });
-
 });
