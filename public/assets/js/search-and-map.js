@@ -9,7 +9,14 @@ $(document).ready(function () {
     var autocomplete = null;
 
     function initialize() {
-        var currentLocation = new google.maps.LatLng(47.1584549, 27.601441799999975);
+        var longitude= localStorage.getItem('lng');
+        var latitude  = localStorage.getItem('lat');
+        var currentLocation;
+        if (latitude != null && longitude != null) {
+            currentLocation = new google.maps.LatLng(latitude, longitude);
+        }
+        else currentLocation = new google.maps.LatLng(47.1584549, 27.601441799999975);
+
         var mapOptions = {
             center: {lat:  (localStorage.getItem('lat') != null) ? Number(localStorage.getItem('lat')) :47.1584549 , lng: (localStorage.getItem('lng')== null) ? 27.601441799999975 : Number(localStorage.getItem('lng'))},
             zoom: 8,
