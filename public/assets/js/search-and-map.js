@@ -1,8 +1,14 @@
 $(document).ready(function () {
+
+    $(".js-tags").select2({
+        tags: true,
+        tokenSeparators: [',', ' ']
+    });
+
     toLoadOrNotToLoad();
-    instagram_check = 0,flickr_check = 0 ,lat = '', lng = '';
-     map = null;
-     autocomplete = null;
+    instagram_check = 0, flickr_check = 0 , lat = '', lng = '';
+    map = null;
+    autocomplete = null;
 
 
     var map = null;
@@ -18,7 +24,10 @@ $(document).ready(function () {
         else currentLocation = new google.maps.LatLng(47.1584549, 27.601441799999975);
 
         var mapOptions = {
-            center: {lat:  (localStorage.getItem('lat') != null) ? Number(localStorage.getItem('lat')) :47.1584549 , lng: (localStorage.getItem('lng')== null) ? 27.601441799999975 : Number(localStorage.getItem('lng'))},
+            center: {
+                lat: (localStorage.getItem('lat') != null) ? Number(localStorage.getItem('lat')) : 47.1584549,
+                lng: (localStorage.getItem('lng') == null) ? 27.601441799999975 : Number(localStorage.getItem('lng'))
+            },
             zoom: 8,
             scrollwheel: false
         };
@@ -29,7 +38,7 @@ $(document).ready(function () {
 
         // Create the autocomplete helper, and associate it with
         // an HTML text input box.
-         autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete = new google.maps.places.Autocomplete(input);
         autocomplete.bindTo('bounds', map);
 
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
@@ -44,7 +53,7 @@ $(document).ready(function () {
             infowindow.open(map, marker);
         });
 
-        google.maps.event.addListener(marker, 'dragend', function() {
+        google.maps.event.addListener(marker, 'dragend', function () {
             lat = marker.getPosition().lat();
             lng = marker.getPosition().lng();
 
@@ -53,7 +62,7 @@ $(document).ready(function () {
         });
         // Get the full place details when the user selects a place from the
         // list of suggestions.
-        google.maps.event.addListener( autocomplete,'place_changed', function () {
+        google.maps.event.addListener(autocomplete, 'place_changed', function () {
 
             infowindow.close();
             var place = autocomplete.getPlace();
@@ -79,22 +88,22 @@ $(document).ready(function () {
             });
             marker.setVisible(true);
 
-            google.maps.event.addListener(marker, 'dragend', function() {
+            google.maps.event.addListener(marker, 'dragend', function () {
                 lat = marker.getPosition().lat();
                 lng = marker.getPosition().lng();
 
                 console.log(lat);
                 console.log(lng);
             });
-            
+
             var cityCircle = new google.maps.Circle({
-                center:new google.maps.LatLng(place.geometry.location.lat(), place.geometry.location.lng()),
-                radius:900,
-                strokeColor:"#0000FF",
-                strokeOpacity:0.8,
-                strokeWeight:2,
-                fillColor:"#0000FF",
-                fillOpacity:0.4
+                center: new google.maps.LatLng(place.geometry.location.lat(), place.geometry.location.lng()),
+                radius: 900,
+                strokeColor: "#0000FF",
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: "#0000FF",
+                fillOpacity: 0.4
             });
 
             cityCircle.setMap(map);
@@ -102,8 +111,7 @@ $(document).ready(function () {
             
             google.maps.event.addListener(marker, 'click', function () {
                 infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
-                'Place ID: ' + place.place_id + '<br>' +
-                place.formatted_address + '</div>');
+                    place.formatted_address + '</div>');
                 infowindow.open(map, marker);
             });
             ///asa se ia latitudinea si lng
@@ -133,138 +141,182 @@ $(document).ready(function () {
         }
     });
 
-    console.log($('.owl-stage-outer'));
-
+    $("#instagram_check").change(function () {
+    $("#instagram_check").change(function () {
+        $(this).is(':checked') ? instagram_check = 1 : instagram_check = 0;
+    });
+    $("#flickr").change(function () {
+        $(this).is(':checked') ? flickr_check = 1 : flickr_check = 0;
+    });
     $("#search_photos").on('click', function () {
+        var season_tag = '';
+        if ($('#spring').is(':checked')) {
+            season_tag = 'spring';
+        }
+        else if ($('#summer').is(':checked')) {
+            season_tag = 'summer';
+        }
+        else if ($('#winter').is(':checked')) {
+            season_tag = 'winter';
+        }
+        else if ($('#autumn').is(':checked')) {
+            season_tag = 'autumn';
+        }
 
-        ///aici fac sctii tu.alte intrebari?si afiseaza ceva sau .daori n azi
-        //var lat = '', lng = '';//gse: vreau astea globale
-        if(typeof lat == 'undefined')
-            lat = localStorage.getItem('lat');
-        if(typeof lng == 'undefined')
-            lat = localStorage.getItem('lng');
+        if (season_tag != '') {
+            $.ajax({
+                url: 'https://api.instagram.com/v1/tags/' + season_tag + '/media/recent?client_id=d49da08a520f47cbb6e7618f077f33ef',
+                dataType: "jsonp",
+                type: "GET"
 
-        if (lat == ''  )
-            $('#nothing_select').modal('show');
-        else {
-            ///flickr-start
+            }).done(function (response) {
+                response.data.forEach(function (entry) {
+                    photo_url = entry.images.standard_resolution.url;
+                    console.log(photo_url);
+                    var $instagram = $('#jjjj');
+                    $instagram.append('<li><a class="fancybox" href="' + photo_url + '"> <img style="display:block" width="40px" height= "45px" width="100px" src="' + photo_url + '"/> </a></li>');
+
+                });
+            });
+            flicr_url = 'https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=e113f3a7317277392933dbb91decaf01' +
+                '&per_page=10' +
+                '&tags=' + season_tag
+            $.ajax({
+                url: flicr_url,
+                dataType: "xml",
+                type: "GET"
+
+            }).done(function (response) {
+                //console.log(response);
+                var photos = response.getElementsByTagName('photo');
+                console.log(photos);
+                for (var i = 0; i < photos.length; i++) {
+                    var farm = photos[i].getAttribute("farm");
+                    var server = photos[i].getAttribute("server");
+                    var id = photos[i].getAttribute("id");
+                    var secret = photos[i].getAttribute("secret");
+                    var photo_url = 'https://farm' + farm + '.staticflickr.com/' + server + '/' + id + '_' + secret + '.jpg';
+
+                    var $instagram = $('#jjjj');
+                    $instagram.append('<li><a class="fancybox" href="' + photo_url + '"> <img style="display:block" width="40px" height= "45px" width="100px" src="' + photo_url + '"/> </a></li>');
+                }
+                $('.jcarousel').jcarousel('reload');
+            });
+        }
+        $('#jjjj').html('');
+        var tags = '';
+        $('.js-tags').select2('data').forEach(function (entry) {
+            tags += entry.id + '+';
+            console.log(entry.id);
+            $.ajax({
+                url: 'https://api.instagram.com/v1/tags/' + entry.id + '/media/recent?client_id=d49da08a520f47cbb6e7618f077f33ef',
+                dataType: "jsonp",
+                type: "GET"
+
+            }).done(function (response) {
+                response.data.forEach(function (entry) {
+                    photo_url = entry.images.standard_resolution.url;
+                    console.log(photo_url);
+                    var $instagram = $('#jjjj');
+                    $instagram.append('<li><a class="fancybox" href="' + photo_url + '"> <img style="display:block" width="40px" height= "45px" width="100px" src="' + photo_url + '"/> </a></li>');
+
+                });
+                $('.jcarousel').jcarousel('reload');
+
+
+            });
+            //flickr-start
             var flicr_url = 'https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=e113f3a7317277392933dbb91decaf01' +
                 '&per_page=10' +
-                '&lat=' + lat +
-                '&lng=' + lng +
-                '&radius=100';
-            if ($("#flickr").is(':checked')) {
-                $.ajax({
-                    url:flicr_url,
-                    dataType: "xml",
-                    type: "GET"
+                '&tags=' + tags
+            $.ajax({
+                url: flicr_url,
+                dataType: "xml",
+                type: "GET"
 
-                }).done(function (response) {
-                    //console.log(response);
-                    var photos = response.getElementsByTagName('photo');
-                    console.log(photos);
-                    for (var i=0;i< photos.length; i++) {
-                        var farm = photos[i].getAttribute("farm");
-                        var server= photos[i].getAttribute("server");
-                        var id = photos[i].getAttribute("id");
-                        var secret = photos[i].getAttribute("secret");
-                        var photo_url = 'https://farm' + farm + '.staticflickr.com/' + server + '/' +  id + '_' + secret + '.jpg';
+            }).done(function (response) {
+                //console.log(response);
+                var photos = response.getElementsByTagName('photo');
+                console.log(photos);
+                for (var i = 0; i < photos.length; i++) {
+                    var farm = photos[i].getAttribute("farm");
+                    var server = photos[i].getAttribute("server");
+                    var id = photos[i].getAttribute("id");
+                    var secret = photos[i].getAttribute("secret");
+                    var photo_url = 'https://farm' + farm + '.staticflickr.com/' + server + '/' + id + '_' + secret + '.jpg';
 
-                        var $instagram = $( '#instagram' );
-                        console.log('---'  + photo_url + '---');
-                        $instagram.append( '<div class="item" style="margin: 3px;width=60px"><a class="fancybox" href="' + photo_url + '"> <img style="display:block" width="40px" height= "45px" width="100px" src="' + photo_url + '"/> </a></div>' );
+                    var $instagram = $('#jjjj');
+                    $instagram.append('<li><a class="fancybox" href="' + photo_url + '"> <img style="display:block" width="40px" height= "45px" width="100px" src="' + photo_url + '"/> </a></li>');
+                }
+                $('.jcarousel').jcarousel('reload');
 
-                    }
-                    //console.log($instagram);
-                    $(".owl-demo").owlCarousel({
+            });
+        });
 
-                        autoPlay: 3000, //Set AutoPlay to 3 seconds
+        $('.jcarousel').jcarousel({});
 
-                        items: 20,
-                        itemsDesktop: [1199, 10],
-                        itemsDesktopSmall: [900, 10]
+        if (typeof lat == 'undefined')
+            lat = localStorage.getItem('lat');
+        if (typeof lng == 'undefined')
+            lat = localStorage.getItem('lng');
 
+        //    ///flickr-start
+        var flicr_url = 'https://api.flickr.com/services/rest/?method=flickr.photos.getRecent&api_key=e113f3a7317277392933dbb91decaf01' +
+            '&per_page=10' +
+            '&lat=' + lat +
+            '&lng=' + lng +
+            '&radius=100';
+        if (flickr_check == 1) {
+            $.ajax({
+                url: flicr_url,
+                dataType: "xml",
+                type: "GET"
+            }).done(function (response) {
+                //console.log(response);
+                var photos = response.getElementsByTagName('photo');
+                console.log(photos);
+                for (var i = 0; i < photos.length; i++) {
+                    var farm = photos[i].getAttribute("farm");
+                    var server = photos[i].getAttribute("server");
+                    var id = photos[i].getAttribute("id");
+                    var secret = photos[i].getAttribute("secret");
+                    var photo_url = 'https://farm' + farm + '.staticflickr.com/' + server + '/' + id + '_' + secret + '.jpg';
+
+                    var $instagram = $('#jjjj');
+                    $instagram.append('<li><a class="fancybox" href="' + photo_url + '"> <img style="display:block" width="40px" height= "45px" width="100px" src="' + photo_url + '"/> </a></li>');
+                }
+                $('.jcarousel').jcarousel('reload');
+
+            });
+        }
+        if (instagram_check == 1) {
+            ///flickr-end
+            $.ajax({
+                url: 'https://api.instagram.com/v1/locations/search?client_id=d49da08a520f47cbb6e7618f077f33ef&lat=' + lat + '&lng=' + lng,
+                dataType: "jsonp",
+                type: "GET"
+            }).done(function (response) {
+                response.data.forEach(function (entry) {
+                    $.ajax({
+                        url: 'https://api.instagram.com/v1/locations/' + entry.id + '/media/recent?client_id=d49da08a520f47cbb6e7618f077f33ef',
+                        dataType: "jsonp",
+                        type: "GET"
+
+                    }).done(function (response) {
+
+                        if (response.data.length > 0) {
+                            var $instagram = $('#jjjj');
+                            $instagram.append('<li><a class="fancybox" href="' + response.data[0].images.standard_resolution.url + '"> <img style="display:block" width="40px" height= "45px" width="100px" src="' + response.data[0].images.standard_resolution.url + '"/> </a></li>');
+                        }
                     });
-                    //$(".fancybox").fancybox({
-                    //    'transitionIn': 'elastic',
-                    //    'transitionOut': 'elastic',
-                    //    'speedIn': 600,
-                    //    'speedOut': 200,
-                    //    'overlayShow': false,
-                    //    helpers : {
-                    //        thumbs: {
-                    //            width   : 50,
-                    //            height  : 50,
-                    //            position: 'bottom'
-                    //        }
-                    //    }
-                    //});
                 });
-            }
-            if ($("#instagram_check").is(':checked')) {
-                console.log(instagram_check + 'inst');
-                ///flickr-end
-                $.ajax({
-                    url: 'https://api.instagram.com/v1/locations/search?client_id=d49da08a520f47cbb6e7618f077f33ef&lat=' + lat + '&lng=' + lng,
-                    dataType: "jsonp",
-                    type: "GET"
-
-                }).done(function (response) {
-                    response.data.forEach(function (entry) {
-                        $.ajax({
-                            url: 'https://api.instagram.com/v1/locations/' + entry.id + '/media/recent?client_id=d49da08a520f47cbb6e7618f077f33ef',
-                            dataType: "jsonp",
-                            type: "GET"
-
-                        }).done(function (response) {
-
-                            if (response.data.length > 0) {
-                                var $instagram = $('#instagram');
-
-                                console.log('---' + response.data[0].images.standard_resolution.url + '----');
-                                $instagram.append('<div class="item" style="margin: 3px;width=60px"><a class="fancybox" href="' + response.data[0].images.standard_resolution.url + '"> <img style="display:block" width="40px" height= "45px" width="100px" src="' + response.data[0].images.standard_resolution.url + '"/> </a></div>');
-
-                            }
-                        });
-
-                    });
-
-                    //$(".owl-demo").owlCarousel({
-                    //
-                    //    autoPlay: 3000, //Set AutoPlay to 3 seconds
-                    //
-                    //    items: 20,
-                    //    itemsDesktop: [1199, 10],
-                    //    itemsDesktopSmall: [900, 10]
-                    //
-                    //});
-                    //$(".fancybox").fancybox({
-                    //    'transitionIn': 'elastic',
-                    //    'transitionOut': 'elastic',
-                    //    'speedIn': 600,
-                    //    'speedOut': 200,
-                    //    'overlayShow': false,
-                    //    helpers : {
-                    //        thumbs: {
-                    //            width   : 50,
-                    //            height  : 50,
-                    //            position: 'bottom'
-                    //        }
-                    //    }
-                    //});
-                }).error(function () {
-                    alert('Something go wrong ,please try again');
-                });
-            }
-            //$(".owl-demo").owlCarousel({
-            //
-            //    autoPlay: 3000, //Set AutoPlay to 3 seconds
-            //
-            //    items: 20,
-            //    itemsDesktop: [1199, 10],
-            //    itemsDesktopSmall: [900, 10]
-            //
-            //});
-         }
+                $('.jcarousel').jcarousel('reload');
+            }).error(function () {
+                alert('Something go wrong ,please try again');
+            });
+        }
+        if (lat == '')
+            $('#nothing_select').modal('show');
+        });
     });
 });
