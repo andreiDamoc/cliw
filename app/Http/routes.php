@@ -14,4 +14,6 @@
 Route::get('/', function () {
     return view('app');
 });
+
+
 Route::post('get_from_pinterest','PinterestController@get_photos');
