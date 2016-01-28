@@ -11,7 +11,7 @@ $(document).ready(function () {
     autocomplete = null;
 
 
-    var map = null;
+    //map = null;
     var autocomplete = null;
 
     function initialize() {
@@ -114,6 +114,7 @@ $(document).ready(function () {
     console.log($('.owl-stage-outer'));
 
     $("#search_photos").on('click', function () {
+        poze = [];
         var season_tag = '';
         if ($('#spring').is(':checked')) {
             season_tag = 'spring';
@@ -166,6 +167,7 @@ $(document).ready(function () {
                 response.data.forEach(function (entry) {
                     photo_url = entry.images.standard_resolution.url;
                     console.log(photo_url);
+                    poze.push(photo_url);
                     var $instagram = $('#jjjj');
                     $instagram.append('<li><a class="fancybox" href="' + photo_url + '"> <img style="display:block" width="40px" height= "45px" width="100px" src="' + photo_url + '"/> </a></li>');
 
@@ -192,7 +194,7 @@ $(document).ready(function () {
                     var id = photos[i].getAttribute("id");
                     var secret = photos[i].getAttribute("secret");
                     var photo_url = 'https://farm' + farm + '.staticflickr.com/' + server + '/' + id + '_' + secret + '.jpg';
-
+                    poze.push(photo_url);
                     var $instagram = $('#jjjj');
                     $instagram.append('<li><a class="fancybox" href="' + photo_url + '"> <img style="display:block" width="40px" height= "45px" width="100px" src="' + photo_url + '"/> </a></li>');
                 }
@@ -214,6 +216,7 @@ $(document).ready(function () {
                     photo_url = entry.images.standard_resolution.url;
                     console.log(photo_url);
                     var $instagram = $('#jjjj');
+                    poze.push(photo_url);
                     $instagram.append('<li><a class="fancybox" href="' + photo_url + '"> <img style="display:block" width="40px" height= "45px" width="100px" src="' + photo_url + '"/> </a></li>');
 
                 });
@@ -240,7 +243,7 @@ $(document).ready(function () {
                     var id = photos[i].getAttribute("id");
                     var secret = photos[i].getAttribute("secret");
                     var photo_url = 'https://farm' + farm + '.staticflickr.com/' + server + '/' + id + '_' + secret + '.jpg';
-
+                    poze.push(photo_url);
                     var $instagram = $('#jjjj');
                     $instagram.append('<li><a class="fancybox" href="' + photo_url + '"> <img style="display:block" width="40px" height= "45px" width="100px" src="' + photo_url + '"/> </a></li>');
                 }
@@ -277,7 +280,7 @@ $(document).ready(function () {
                     var id = photos[i].getAttribute("id");
                     var secret = photos[i].getAttribute("secret");
                     var photo_url = 'https://farm' + farm + '.staticflickr.com/' + server + '/' + id + '_' + secret + '.jpg';
-
+                    poze.push(photo_url);
                     var $instagram = $('#jjjj');
                     $instagram.append('<li><a class="fancybox" href="' + photo_url + '"> <img style="display:block" width="40px" height= "45px" width="100px" src="' + photo_url + '"/> </a></li>');
                 }
@@ -302,6 +305,7 @@ $(document).ready(function () {
 
                         if (response.data.length > 0) {
                             var $instagram = $('#jjjj');
+                            poze.push(response.data[0].images.standard_resolution.url);
                             $instagram.append('<li><a class="fancybox" href="' + response.data[0].images.standard_resolution.url + '"> <img style="display:block" width="40px" height= "45px" width="100px" src="' + response.data[0].images.standard_resolution.url + '"/> </a></li>');
                         }
                     });
