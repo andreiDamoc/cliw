@@ -39,6 +39,34 @@
      .owl-item .active{
         width:60px !important;
         }
+      .jcarousel {
+          position: relative;
+          overflow: hidden;
+      }
+
+      /*
+      This is the container of the carousel items.
+      You must ensure that the position is relative or absolute and
+      that the width is big enough to contain all items.
+      */
+      .jcarousel ul {
+          width: 20000em;
+          position: relative;
+
+          /* Optional, required in this case since it's a <ul> element */
+          list-style: none;
+          margin: 0;
+          padding: 0;
+      }
+
+      /*
+      These are the item elements. jCarousel works best, if the items
+      have a fixed width and height (but it's not required).
+      */
+      .jcarousel li {
+          /* Required only for block elements like <li>'s */
+          float: left;
+      }
     </style>
     <link media="screen" type="text/css" rel="stylesheet" href="{{asset('assets/plugins/jquery-nouislider/jquery.nouislider.css')}}"/>
     <script type="text/javascript">
@@ -86,9 +114,16 @@
         <div class="container-fluid container-fixed-lg">
         </div>
       </div>
-        <div class="container-fluid container-fixed-lg footer m-b-60" style="height: 50px !important;">
-          <div class="owl-demo" id="instagram">
-          </div>
+        <div class="container-fluid container-fixed-lg footer m-b-60" style="height: 50px !important; width: 80%">
+            <div class="jcarousel">
+                <ul id="jjjj">
+                </ul>
+                <a class="jcarousel-prev" href="#">Prev</a>
+                <a class="jcarousel-next" href="#">Next</a>
+            </div>
+
+            {{--<div class="owl-demo" id="instagram">--}}
+          {{--</div>--}}
         </div>
     </div>
   </div>
@@ -130,10 +165,12 @@
     <script type="text/javascript" src="{{ asset('assets/plugins/jquery-nouislider/jquery.nouislider.min.js')}}"> </script>
     <script type="text/javascript" src="{{ asset('assets/plugins/jquery-nouislider/jquery.liblink.js')}}"></script>
     <script src="{{ asset('pages/js/pages.min.js')}}"></script>
-    <script src="{{ asset('assets/js/search-and-map.js')}}"></script>
     <script src="{{ asset('assets/js/scripts.js')}}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/instagram.js')}}"></script>
     <script src="{{ asset('assets/js/gallery-fancybox.js') }}"></script>
-    <script src="{{ asset('assets/js/owl-carousel.js') }}"></script>
+    <script src="{{ asset('assets/js/jcarousel.js') }}"></script>
+    <script src="{{ asset('assets/js/jcarousel-control.js') }}"></script>
+ <script src="{{ asset('assets/js/search-and-map.js')}}"></script>
+
   </body>
 </html>
