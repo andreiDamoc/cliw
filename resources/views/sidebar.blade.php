@@ -27,8 +27,8 @@
                                 <label for="summer">Summer</label><br>
                                 <input type="radio" value="no" name="radio4" id="autumn">
                                 <label for="autumn">Autumn</label><br>
-                                <input type="radio" value="no" name="radio4" id="radio4No">
-                                <label for="radio4No">Winter</label>
+                                <input type="radio" value="no" name="radio4" id="winter">
+                                <label for="winter">Winter</label>
                             </div>
 
                         </div>
@@ -55,7 +55,7 @@
             </li>
             <li>
                 <a href="javascript:;">
-                    <span class="title">Application</span>
+                    <span class="title">Tags</span>
                     <span class=" arrow"></span>
                 </a>
                 <span class="icon-thumbnail">App</span>
@@ -63,23 +63,7 @@
                     <li class="">
                         <div class="row">
                     <li>
-                        <a href="javascript:;">
-                            <span class="title">Instagram</span>
-                            <span class=" arrow"></span>
-                        </a>
-                        <ul class="sub-menu">
-                            <li class="">
-                                <div class="row">
-                                    <form id="form">
-                                        <input type="text" id="search"/>
-                                    </form>
-                                </div>
-                            </li>
-                        </ul>
-                        <a href="javascript:;">
-                            <span class="title">Flickr</span>
-                            <span class=" arrow"></span>
-                        </a>
+                        <input class="js-tags" style="width:150px"/>
                     </li>
                 </ul>
             </li>
