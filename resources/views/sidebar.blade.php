@@ -44,8 +44,13 @@
                 <ul class="sub-menu">
                     <li class="">
                         <div class="row">
-                            <div class="col-md-8">
-                                <div id="noUiSlider" class="bg-master"></div>
+                            <div class="radio radio-info">
+                                <input type="radio" checked="checked" value="yes" name="radio5" id="100km">
+                                <label for="100km" id="100km">100 km</label><br>
+                                <input type="radio" value="no" name="radio5" id="500km">
+                                <label for="500km" id="500km">500 km</label><br>
+                                <input type="radio" value="no" name="radio5" id="1000km">
+                                <label for="1000km" id="1000km">1000 km</label><br>
                             </div>
                             <div class="col-md-4">
                             </div>
@@ -61,8 +66,6 @@
                 <span class="icon-thumbnail">App</span>
                 <ul class="sub-menu">
                     <li class="">
-                        <div class="row">
-                    <li>
                         <input class="js-tags" style="width:150px"/>
                     </li>
                 </ul>
@@ -75,9 +78,7 @@
                 <span class=" icon-thumbnail">FR</span>
                 <ul class="sub-menu">
                     <li class="">
-                        <div class="row">
-                    <li>
-                    <div class="checkbox check-success  ">
+                    <div class="checkbox check-success">
                         <input type="checkbox"   id="instagram_check">
                         <label for="instagram_check">Instagram</label>
                     </div>
